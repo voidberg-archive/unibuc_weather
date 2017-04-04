@@ -50,7 +50,10 @@ class UnibucWeatherBlock extends BlockBase implements BlockPluginInterface {
         }
 
         return array(
-          '#markup' => $this->t('The temperature in @city is @temp @degree', array('@city' => $city, '@temp' => $temp, '@degree' => strtoupper($degree)))
+          '#theme' => 'unibuc_weather_display',
+          '#city' => $city,
+          '#temp' => $temp,
+          '#degree' => $degree,
         );
       } else {
         return array(

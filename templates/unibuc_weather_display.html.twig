@@ -1,0 +1,11 @@
+<section>
+    {% trans %}
+        <p>The temperature in <strong>{{ city }}</strong> is {{ temp }} <strong>{{ degree|upper }}</strong>.</p>
+    {% endtrans %}
+
+    {% if temp < 10 %}
+        <p>Brrrrr....</p>
+    {% else %}
+        <p>Nice weather!</p>
+    {% endif %}
+</section>

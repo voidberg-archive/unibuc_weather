@@ -3,3 +3,18 @@
  * @file
  * Code for the unibuc_weather.module.
  */
+/**
+ * Implements hook_theme().
+ */
+function unibuc_weather_theme() {
+  $theme['unibuc_weather_display'] = [
+    'variables' => [
+      'city' => null,
+      'temp' => null,
+      'degree' => null,
+    ],
+    'template' => 'unibuc_weather_display'
+  ];
+
+  return $theme;
+}
