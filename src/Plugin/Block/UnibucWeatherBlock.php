@@ -25,6 +25,7 @@ class UnibucWeatherBlock extends BlockBase implements BlockPluginInterface {
      */
     public function build() {
       $config = \Drupal::config('unibuc_weather.settings');
+      $cache = \Drupal::cache();
 
       // http://api.openweathermap.org/data/2.5/weather?q=Bucharest&appid=a957b3b17978c0a401605e354a724d7e
       // http://api.openweathermap.org/data/2.5/weather?id=683506&appid=a957b3b17978c0a401605e354a724d7e
@@ -35,13 +36,22 @@ class UnibucWeatherBlock extends BlockBase implements BlockPluginInterface {
       $city = $config->get('city');
 
       if (!empty($api_key)) {
-        $url = 'http://api.openweathermap.org/data/2.5/weather?q=' . $city . '&APPID=' . $api_key;
+        $cid = 'unibuc_weather:' . $city;
 
-        $data = (string) \Drupal::httpClient()->get($url)->getBody();
+        $cachedData = $cache->get($cid);
 
-        $data = json_decode($data);
-        $temp = $data->main->temp;
-        $degree = $temperature;
+        if ($cachedData) {
+          $temp = $cachedData->data;
+        } else {
+          $url = 'http://api.openweathermap.org/data/2.5/weather?q=' . $city . '&APPID=' . $api_key;
+
+          $data = (string) \Drupal::httpClient()->get($url)->getBody();
+
+          $data = json_decode($data);
+          $temp = $data->main->temp;
+
+          $cache->set($cid, $temp, time() + 3600);
+        }
 
         if ($temperature == 'c') {
           $temp = $temp - 273;
@@ -53,7 +63,7 @@ class UnibucWeatherBlock extends BlockBase implements BlockPluginInterface {
           '#theme' => 'unibuc_weather_display',
           '#city' => $city,
           '#temp' => $temp,
-          '#degree' => $degree,
+          '#degree' => $temperature,
         );
       } else {
         return array(
