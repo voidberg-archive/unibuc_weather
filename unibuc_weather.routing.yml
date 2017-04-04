@@ -1,0 +1,7 @@
+unibuc_weather.config:
+  path: /admin/config/system/unibuc_weather
+  defaults:
+    _form: 'Drupal\unibuc_weather\Form\ConfigForm'
+    _title: 'Unibuc weather configuration'
+  requirements:
+    _permission: 'administer_site_configuration'

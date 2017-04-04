@@ -1,0 +1,13 @@
+unibuc_weather.settings:
+  type: mapping
+  label: 'Settings for the Unibuc Weather module.'
+  mapping:
+    api_key:
+      type: string
+      label: 'API key from openweathermap.com'
+    temperature:
+      type: string
+      label: 'How to display the temperature'
+    city:
+      type: string
+      label: 'City to use'

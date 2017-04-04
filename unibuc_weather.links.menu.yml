@@ -1,0 +1,6 @@
+unibuc_weather.admin:
+  title: 'Unibuc weather configuration'
+  description: 'Configure the settings for the Unibuc weather module.'
+  route_name: unibuc_weather.config
+  parent: system.admin_config_system
+  weight: 100
